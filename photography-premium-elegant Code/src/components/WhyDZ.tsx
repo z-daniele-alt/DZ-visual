@@ -1,4 +1,5 @@
 import React from 'react';
+import { aboutPhoto } from '@/data/portfolio';
 
 const values = [
   { label: 'Authentisch', text: 'Keine künstliche Wirkung. Bilder, die sich nach dir anfühlen.' },
@@ -27,6 +28,36 @@ const WhyDZ: React.FC = () => {
             </p>
             <p className="text-[16px] lg:text-[17px] text-[#A6A19A] leading-[1.8] font-light">
               Durch klare Kommunikation, kreative Zusammenarbeit und hochwertige Bearbeitung entsteht Content, der professionell wirkt, Vertrauen schafft und neue Möglichkeiten eröffnet.
+            </p>
+          </div>
+        </div>
+
+        {/* Über mich */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-20 lg:mb-28 items-center">
+          <div className="lg:col-span-4 reveal img-hover">
+            <div className="aspect-[4/5] overflow-hidden">
+              <img
+                src={aboutPhoto.src}
+                srcSet={`${aboutPhoto.srcSm} 640w, ${aboutPhoto.srcMd} 1200w, ${aboutPhoto.src} 2000w`}
+                sizes="(min-width: 1024px) 33vw, 90vw"
+                alt={aboutPhoto.alt}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          <div className="lg:col-span-7 lg:col-start-6 reveal">
+            <p className="label-caps mb-6">Über mich</p>
+            <p className="font-serif-display text-[24px] lg:text-[32px] text-[#F5F2ED] italic leading-snug mb-6">
+              Hinter DZ Visuals steht Daniele.
+            </p>
+            <p className="text-[16px] lg:text-[17px] text-[#A6A19A] leading-[1.8] font-light">
+              Als Fotograf mit einem Auge fürs Detail und einer Leidenschaft für Automotive, Portrait- und
+              Eventfotografie begleitet er Menschen und Marken dabei, sich so zu zeigen, wie sie wirklich sind.
+            </p>
+            <p className="mt-4 text-[16px] lg:text-[17px] text-[#A6A19A] leading-[1.8] font-light">
+              Ruhig im Auftreten, präzise im Blick – und immer auf der Suche nach dem Moment, der mehr erzählt
+              als tausend Worte.
             </p>
           </div>
         </div>

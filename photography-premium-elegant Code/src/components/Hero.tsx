@@ -12,8 +12,10 @@ const Hero: React.FC = () => {
       {/* Background image */}
       <div className="absolute inset-0 overflow-hidden">
         <img
-          src={heroImage}
-          alt="Cinematic Stimmungsbild – DZ Visuals"
+          src={heroImage.src}
+          srcSet={`${heroImage.srcSm} 640w, ${heroImage.srcMd} 1200w, ${heroImage.src} 2000w`}
+          sizes="100vw"
+          alt={heroImage.alt}
           className="w-full h-full object-cover animate-slow-zoom"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#050505]" />

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Header from './Header';
+import Gallery from './Gallery';
 import Hero from './Hero';
 import TrustBar from './TrustBar';
 import ProblemSection from './ProblemSection';
@@ -33,6 +34,7 @@ const AppLayout: React.FC = () => {
     <div className="relative min-h-screen bg-[#050505] grain-bg overflow-hidden">
       <Header />
       <main>
+        <Gallery />
         <Hero />
         <TrustBar />
         <ProblemSection />

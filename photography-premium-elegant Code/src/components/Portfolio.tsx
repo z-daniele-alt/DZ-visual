@@ -1,21 +1,24 @@
 import React, { useState, useMemo } from 'react';
-import { portfolioItems, PortfolioItem } from '@/data/portfolio';
+import { portfolioItems, brandContentItems, PortfolioItem } from '@/data/portfolio';
 
-const categories = ['Alle', 'Automotive', 'Portrait', 'Events', 'Brand Content'] as const;
-
-const handleImgError = (e: React.SyntheticEvent<HTMLImageElement>, fallback: string) => {
-  const img = e.currentTarget;
-  if (img.src !== fallback) img.src = fallback;
-};
+const tabs = [
+  { label: 'Alle', value: 'Alle' },
+  { label: 'Automotive', value: 'Automotive' },
+  { label: 'Porträt', value: 'Portrait' },
+  { label: 'Events', value: 'Events' },
+  { label: 'Brand Content', value: 'Brand Content' },
+  { label: 'Real Estate', value: 'Real Estate' },
+] as const;
 
 const Portfolio: React.FC = () => {
-  const [filter, setFilter] = useState<(typeof categories)[number]>('Alle');
+  const [filter, setFilter] = useState<(typeof tabs)[number]['value']>('Alle');
   const [lightbox, setLightbox] = useState<PortfolioItem | null>(null);
 
-  const items = useMemo(
-    () => (filter === 'Alle' ? portfolioItems : portfolioItems.filter((p) => p.category === filter)),
-    [filter]
-  );
+  const items = useMemo(() => {
+    if (filter === 'Alle') return portfolioItems;
+    if (filter === 'Brand Content') return brandContentItems;
+    return portfolioItems.filter((p) => p.category === filter);
+  }, [filter]);
 
   const scrollToContact = () => {
     const el = document.getElementById('kontakt');
@@ -35,17 +38,17 @@ const Portfolio: React.FC = () => {
           </div>
           <div className="lg:col-span-4 lg:col-start-9 flex lg:items-end reveal">
             <div className="flex flex-wrap gap-2 lg:gap-3">
-              {categories.map((c) => (
+              {tabs.map((t) => (
                 <button
-                  key={c}
-                  onClick={() => setFilter(c)}
+                  key={t.value}
+                  onClick={() => setFilter(t.value)}
                   className={`px-4 py-2 text-[11px] tracking-[0.2em] uppercase border transition-all duration-500 ${
-                    filter === c
+                    filter === t.value
                       ? 'border-[#A58B68] text-[#F5F2ED] bg-[#A58B68]/10'
                       : 'border-white/15 text-[#A6A19A] hover:border-white/40 hover:text-[#F5F2ED]'
                   }`}
                 >
-                  {c}
+                  {t.label}
                 </button>
               ))}
             </div>
@@ -79,9 +82,10 @@ const Portfolio: React.FC = () => {
               >
                 <img
                   src={item.src}
+                  srcSet={`${item.srcSm} 640w, ${item.srcMd} 1200w, ${item.src} 2000w`}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   alt={item.alt}
                   loading="lazy"
-                  onError={(e) => handleImgError(e, item.fallback)}
                   className="w-full h-full object-cover"
                 />
                 {/* Gradient overlay */}
@@ -157,7 +161,6 @@ const Portfolio: React.FC = () => {
             <img
               src={lightbox.src}
               alt={lightbox.alt}
-              onError={(e) => handleImgError(e, lightbox.fallback)}
               className="max-w-full max-h-[78vh] object-contain"
             />
             <div className="mt-6 w-full flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 px-2">

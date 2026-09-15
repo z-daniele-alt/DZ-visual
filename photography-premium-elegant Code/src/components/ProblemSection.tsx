@@ -37,8 +37,10 @@ const ProblemSection: React.FC = () => {
         <div className="mt-20 lg:mt-32 reveal img-hover">
           <div className="relative aspect-[21/9] overflow-hidden">
             <img
-              src={moodPortrait}
-              alt="Atmosphärisches Stimmungsbild im editorialen Stil"
+              src={moodPortrait.src}
+              srcSet={`${moodPortrait.srcSm} 640w, ${moodPortrait.srcMd} 1200w, ${moodPortrait.src} 2000w`}
+              sizes="100vw"
+              alt={moodPortrait.alt}
               loading="lazy"
               className="w-full h-full object-cover"
             />

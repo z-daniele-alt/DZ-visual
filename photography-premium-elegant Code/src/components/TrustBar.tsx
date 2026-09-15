@@ -5,7 +5,7 @@ const items = [
   'Portrait',
   'Automotive',
   'Brand Content',
-  'Sessions ab CHF 250.–',
+  'Real Estate',
 ];
 
 const TrustBar: React.FC = () => {

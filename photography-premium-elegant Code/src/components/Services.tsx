@@ -1,7 +1,8 @@
 import React from 'react';
-import { portfolioItems, PortfolioCategory } from '@/data/portfolio';
+import { portfolioItems, brandContentItems, PortfolioCategory } from '@/data/portfolio';
 
-const pick = (cat: PortfolioCategory) => portfolioItems.find((p) => p.category === cat);
+const pick = (cat: PortfolioCategory) =>
+  [...portfolioItems, ...brandContentItems].find((p) => p.category === cat);
 
 const services = [
   {
@@ -76,12 +77,10 @@ const Services: React.FC = () => {
                   {s.item && (
                     <img
                       src={s.item.src}
+                      srcSet={`${s.item.srcSm} 640w, ${s.item.srcMd} 1200w, ${s.item.src} 2000w`}
+                      sizes="(min-width: 1024px) 25vw, 90vw"
                       alt={s.item.alt}
                       loading="lazy"
-                      onError={(e) => {
-                        const t = e.currentTarget;
-                        if (s.item && t.src !== s.item.fallback) t.src = s.item.fallback;
-                      }}
                       className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-1000"
                     />
                   )}

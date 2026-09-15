@@ -41,8 +41,10 @@ const BeforeAfter: React.FC = () => {
           <div className="relative reveal" style={{ transitionDelay: '180ms' }}>
             <div className="aspect-[4/5] overflow-hidden img-hover">
               <img
-                src={afterImg}
-                alt="Atmosphärisches Stimmungsbild – starke visuelle Wirkung"
+                src={afterImg.src}
+                srcSet={`${afterImg.srcSm} 640w, ${afterImg.srcMd} 1200w, ${afterImg.src} 2000w`}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                alt={afterImg.alt}
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
