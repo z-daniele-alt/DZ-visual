@@ -55,7 +55,8 @@ const Contact: React.FC = () => {
   const [values, setValues] = useState<FormState>(initialState);
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const handleChange = (field: keyof FormState) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -72,7 +73,7 @@ const Contact: React.FC = () => {
     setErrors(validate({ ...values }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validate(values);
     setErrors(validationErrors);
@@ -87,22 +88,30 @@ const Contact: React.FC = () => {
 
     if (Object.keys(validationErrors).length > 0) return;
 
-    const subject = encodeURIComponent(`Projektanfrage von ${values.firstName} ${values.lastName}`);
-    const bodyLines = [
-      `Vorname: ${values.firstName}`,
-      `Nachname: ${values.lastName}`,
-      `E-Mail: ${values.email}`,
-      `Handynummer: ${values.phone || '–'}`,
-      `Ungefähres Budget: ${values.budget || '–'}`,
-      '',
-      'Nachricht:',
-      values.message,
-    ];
-    const body = encodeURIComponent(bodyLines.join('\n'));
-    const mailto = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+    setStatus('sending');
+    setServerError(null);
 
-    window.location.href = mailto;
-    setSubmitted(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
+      });
+      const result = await res.json().catch(() => null);
+
+      if (!res.ok || !result?.ok) {
+        setServerError(result?.error || 'Die Anfrage konnte nicht gesendet werden.');
+        setStatus('error');
+        return;
+      }
+
+      setStatus('success');
+      setValues(initialState);
+      setTouched({});
+    } catch {
+      setServerError('Keine Verbindung zum Server. Bitte versuch es erneut oder schreib mir direkt per E-Mail.');
+      setStatus('error');
+    }
   };
 
   const errorFor = (field: keyof FormState) => (touched[field] ? errors[field] : undefined);
@@ -237,9 +246,10 @@ const Contact: React.FC = () => {
           <div className="mt-12 flex flex-col sm:flex-row sm:items-center gap-6">
             <button
               type="submit"
-              className="group inline-flex items-center justify-center gap-4 px-8 py-5 lg:px-10 lg:py-6 bg-[#F5F2ED] text-[#050505] hover:bg-[#E7DDD0] transition-all duration-500 text-[11px] lg:text-[12px] tracking-[0.22em] uppercase font-medium"
+              disabled={status === 'sending'}
+              className="group inline-flex items-center justify-center gap-4 px-8 py-5 lg:px-10 lg:py-6 bg-[#F5F2ED] text-[#050505] hover:bg-[#E7DDD0] transition-all duration-500 text-[11px] lg:text-[12px] tracking-[0.22em] uppercase font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Anfrage senden
+              {status === 'sending' ? 'Wird gesendet …' : 'Anfrage senden'}
               <span className="w-5 h-px bg-current group-hover:w-9 transition-all duration-500" />
             </button>
             <a href={`mailto:${EMAIL}`} className="link-underline text-[14px] tracking-[0.12em] text-[#F5F2ED]">
@@ -248,13 +258,17 @@ const Contact: React.FC = () => {
           </div>
 
           <p className="mt-6 text-[12px] text-[#A6A19A]/80 font-light">
-            * Pflichtfelder. Beim Senden öffnet sich dein E-Mail-Programm mit einer vorausgefüllten
-            Nachricht an Daniele – so landet deine Anfrage direkt und sicher bei ihm.
+            * Pflichtfelder. Deine Anfrage wird direkt an Daniele weitergeleitet.
           </p>
 
-          {submitted && (
+          {status === 'success' && (
             <p className="mt-4 text-[13px] text-[#A58B68]">
-              Dein E-Mail-Programm sollte sich soeben geöffnet haben. Falls nicht, schreib mir direkt an{' '}
+              Danke! Deine Anfrage ist angekommen – ich melde mich so schnell wie möglich bei dir.
+            </p>
+          )}
+          {status === 'error' && (
+            <p className="mt-4 text-[13px] text-[#C97B63]">
+              {serverError} Alternativ erreichst du mich direkt an{' '}
               <a href={`mailto:${EMAIL}`} className="link-underline">
                 {EMAIL}
               </a>
