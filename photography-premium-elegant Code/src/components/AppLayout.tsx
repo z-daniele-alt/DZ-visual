@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import Header from './Header';
-import Gallery from './Gallery';
 import Hero from './Hero';
-import TrustBar from './TrustBar';
 import ProblemSection from './ProblemSection';
+import TrustBar from './TrustBar';
+import Gallery from './Gallery';
 import Portfolio from './Portfolio';
 import Services from './Services';
 import BeforeAfter from './BeforeAfter';
 import WhyDZ from './WhyDZ';
 import Process from './Process';
-import Pricing from './Pricing';
 import Audiences from './Audiences';
 import Contact from './Contact';
 import Footer from './Footer';
@@ -34,16 +33,15 @@ const AppLayout: React.FC = () => {
     <div className="relative min-h-screen bg-[#050505] grain-bg overflow-hidden">
       <Header />
       <main>
-        <Gallery />
         <Hero />
-        <TrustBar />
         <ProblemSection />
+        <TrustBar />
+        <Gallery />
         <Portfolio />
         <Services />
         <BeforeAfter />
         <WhyDZ />
         <Process />
-        <Pricing />
         <Audiences />
         <Contact />
       </main>

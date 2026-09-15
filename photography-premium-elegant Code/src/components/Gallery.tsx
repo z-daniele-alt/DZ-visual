@@ -27,6 +27,7 @@ const Gallery: React.FC = () => {
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                 alt={item.alt}
                 loading="lazy"
+                style={item.focalY != null ? { objectPosition: `50% ${item.focalY}%` } : undefined}
                 className="w-full h-auto object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />

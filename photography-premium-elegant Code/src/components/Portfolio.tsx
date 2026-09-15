@@ -86,6 +86,7 @@ const Portfolio: React.FC = () => {
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   alt={item.alt}
                   loading="lazy"
+                  style={item.focalY != null ? { objectPosition: `50% ${item.focalY}%` } : undefined}
                   className="w-full h-full object-cover"
                 />
                 {/* Gradient overlay */}

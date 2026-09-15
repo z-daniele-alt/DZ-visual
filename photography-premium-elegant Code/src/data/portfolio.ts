@@ -18,6 +18,12 @@ export type PortfolioItem = {
   location?: string;
   /** Optionales Aufnahmejahr. */
   year?: string;
+  /**
+   * Vertikaler Fokuspunkt (0–100, % von oben) für zugeschnittene Grid-/Galerie-
+   * Thumbnails, damit z. B. bei Porträts das Gesicht sichtbar bleibt.
+   * Wirkt sich NICHT auf die Lightbox/Vollbildansicht aus. Ohne Angabe: 50 (Mitte).
+   */
+  focalY?: number;
 };
 
 const img = (dir: string, slug: string) => ({
@@ -49,16 +55,16 @@ export const portfolioItems: PortfolioItem[] = [
   { id: 'automotive-15', ...img('automotive', 'automotive-15'), alt: 'Nächtliche Aufnahme eines dunklen Fahrzeugs aus ungewöhnlicher Perspektive', category: 'Automotive', title: 'Aus der Dunkelheit', year: '2025' },
 
   // Portrait
-  { id: 'portrait-01', ...img('portrait', 'portrait-01'), alt: 'Editorial Portrait eines Mannes mit herbstlicher Kulisse', category: 'Portrait', title: 'Herbstlicht', year: '2025' },
-  { id: 'portrait-02', ...img('portrait', 'portrait-02'), alt: 'Portrait einer Tänzerin im Studio mit natürlichem Licht', category: 'Portrait', title: 'Bewegung', year: '2025' },
-  { id: 'portrait-03', ...img('portrait', 'portrait-03'), alt: 'Street-Style Portrait eines Mannes in urbanem Umfeld', category: 'Portrait', title: 'Urbane Haltung', year: '2025' },
-  { id: 'portrait-04', ...img('portrait', 'portrait-04'), alt: 'Business-Portrait einer Frau an ihrem Arbeitsplatz', category: 'Portrait', title: 'Klarheit', year: '2025' },
-  { id: 'portrait-05', ...img('portrait', 'portrait-05'), alt: 'Schwarz-Weiss Portrait eines Mannes mit markantem Ausdruck', category: 'Portrait', title: 'Ruhe', year: '2025' },
-  { id: 'portrait-06', ...img('portrait', 'portrait-06'), alt: 'Charakterportrait eines Mannes in Schwarz-Weiss mit Sonnenbrille', category: 'Portrait', title: 'Charakterkopf', year: '2025' },
-  { id: 'portrait-07', ...img('portrait', 'portrait-07'), alt: 'Actionportrait eines Snowboarders vor alpiner Bergkulisse', category: 'Portrait', title: 'Höhenlage', location: 'Schweizer Alpen', year: '2025' },
-  { id: 'portrait-08', ...img('portrait', 'portrait-08'), alt: 'Portrait eines Mannes in Wintersport-Bekleidung vor Bergpanorama', category: 'Portrait', title: 'Gipfelblick', location: 'Schweizer Alpen', year: '2025' },
-  { id: 'portrait-09', ...img('portrait', 'portrait-09'), alt: 'Lifestyle-Portrait, casual-elegant gekleidet, sitzend', category: 'Portrait', title: 'Lässige Präsenz', year: '2025' },
-  { id: 'portrait-10', ...img('portrait', 'portrait-10'), alt: 'Nahportrait eines Mannes mit nachdenklichem Ausdruck', category: 'Portrait', title: 'Stille Präsenz', year: '2025' },
+  { id: 'portrait-01', ...img('portrait', 'portrait-01'), alt: 'Editorial Portrait eines Mannes mit herbstlicher Kulisse', category: 'Portrait', title: 'Herbstlicht', year: '2025', focalY: 20 },
+  { id: 'portrait-02', ...img('portrait', 'portrait-02'), alt: 'Portrait einer Tänzerin im Studio mit natürlichem Licht', category: 'Portrait', title: 'Bewegung', year: '2025', focalY: 12 },
+  { id: 'portrait-03', ...img('portrait', 'portrait-03'), alt: 'Street-Style Portrait eines Mannes in urbanem Umfeld', category: 'Portrait', title: 'Urbane Haltung', year: '2025', focalY: 20 },
+  { id: 'portrait-04', ...img('portrait', 'portrait-04'), alt: 'Business-Portrait einer Frau an ihrem Arbeitsplatz', category: 'Portrait', title: 'Klarheit', year: '2025', focalY: 25 },
+  { id: 'portrait-05', ...img('portrait', 'portrait-05'), alt: 'Schwarz-Weiss Portrait eines Mannes mit markantem Ausdruck', category: 'Portrait', title: 'Ruhe', year: '2025', focalY: 20 },
+  { id: 'portrait-06', ...img('portrait', 'portrait-06'), alt: 'Charakterportrait eines Mannes in Schwarz-Weiss mit Sonnenbrille', category: 'Portrait', title: 'Charakterkopf', year: '2025', focalY: 30 },
+  { id: 'portrait-07', ...img('portrait', 'portrait-07'), alt: 'Actionportrait eines Snowboarders vor alpiner Bergkulisse', category: 'Portrait', title: 'Höhenlage', location: 'Schweizer Alpen', year: '2025', focalY: 15 },
+  { id: 'portrait-08', ...img('portrait', 'portrait-08'), alt: 'Portrait eines Mannes in Wintersport-Bekleidung vor Bergpanorama', category: 'Portrait', title: 'Gipfelblick', location: 'Schweizer Alpen', year: '2025', focalY: 15 },
+  { id: 'portrait-09', ...img('portrait', 'portrait-09'), alt: 'Lifestyle-Portrait, casual-elegant gekleidet, sitzend', category: 'Portrait', title: 'Lässige Präsenz', year: '2025', focalY: 25 },
+  { id: 'portrait-10', ...img('portrait', 'portrait-10'), alt: 'Nahportrait eines Mannes mit nachdenklichem Ausdruck', category: 'Portrait', title: 'Stille Präsenz', year: '2025', focalY: 35 },
 
   // Events
   { id: 'event-01', ...img('events', 'event-01'), alt: 'Bar-Szene mit Service im Fokus bei einem Event', category: 'Events', title: 'Am Tresen', year: '2025' },
@@ -94,17 +100,18 @@ export const portfolioItems: PortfolioItem[] = [
 export const brandContentItems: PortfolioItem[] = [
   { id: 'brand-01', ...img('events', 'event-04'), alt: 'Automotive-Lifestyle-Café mit Sportwagen im Innenraum', category: 'Brand Content', title: 'Backstage Moment', year: '2025' },
   { id: 'brand-02', ...img('automotive', 'automotive-09'), alt: 'Freigelegter V8-Motorraum in voller Detailschärfe', category: 'Brand Content', title: 'Kraft im Detail', year: '2025' },
-  { id: 'brand-03', ...img('portrait', 'portrait-06'), alt: 'Charakterportrait eines Mannes in Schwarz-Weiss mit Sonnenbrille', category: 'Brand Content', title: 'Charakterkopf', year: '2025' },
+  { id: 'brand-03', ...img('portrait', 'portrait-06'), alt: 'Charakterportrait eines Mannes in Schwarz-Weiss mit Sonnenbrille', category: 'Brand Content', title: 'Charakterkopf', year: '2025', focalY: 30 },
   { id: 'brand-04', ...img('realestate', 'realestate-04'), alt: 'Offener, lichtdurchfluteter Wohn- und Küchenbereich', category: 'Brand Content', title: 'Raum & Licht', year: '2025' },
   { id: 'brand-05', ...img('automotive', 'automotive-14'), alt: 'Felgen- und Bremssattel-Detail mit Porsche-Wappen', category: 'Brand Content', title: 'Präzision', year: '2025' },
-  { id: 'brand-06', ...img('portrait', 'portrait-04'), alt: 'Business-Portrait einer Frau an ihrem Arbeitsplatz', category: 'Brand Content', title: 'Klarheit', year: '2025' },
+  { id: 'brand-06', ...img('portrait', 'portrait-04'), alt: 'Business-Portrait einer Frau an ihrem Arbeitsplatz', category: 'Brand Content', title: 'Klarheit', year: '2025', focalY: 25 },
 ];
 
-/** Schnellzugriff auf das Hero-Bild – stärkste verfügbare Automotive-Aufnahme. */
-export const heroImage = portfolioItems.find((p) => p.id === 'automotive-04')!;
+/** Hero-Bild (Originalzustand): cinematisches AMG-GT-Stimmungsbild. */
+export const heroImage =
+  'https://d64gsuwffb70l.cloudfront.net/6a140b8aff90028e7715676c_1779698690100_d0146267.png';
 
-/** Atmosphärisches Stimmungsbild für die Problem-Sektion. */
-export const moodPortrait = portfolioItems.find((p) => p.id === 'portrait-05')!;
+/** Atmosphärisches Stimmungsbild für die Problem-Sektion ("Ersteindruck"). */
+export const moodPortrait = portfolioItems.find((p) => p.id === 'automotive-04')!;
 
 /** Bilder für die Vorher-/Nachher-Wirkung. */
 export const beforeImg =
