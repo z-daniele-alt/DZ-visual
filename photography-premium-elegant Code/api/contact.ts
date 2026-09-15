@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import { sendContactEmail, type ContactPayload } from './_lib/sendContactEmail';
+import { sendContactEmail, type ContactPayload } from './_lib/sendContactEmail.js';
 
 /**
  * Vercel-style serverless function (Node runtime). Auto-detected by Vercel
