@@ -24,13 +24,13 @@ function contactApiDevMiddleware(): Plugin {
             const { sendContactEmail } = await import("./api/_lib/sendContactEmail");
             const payload = raw ? JSON.parse(raw) : {};
             const result = await sendContactEmail(payload);
-            res.statusCode = result.ok ? 200 : result.status;
+            res.statusCode = result.status;
             res.setHeader("Content-Type", "application/json");
             res.end(JSON.stringify(result));
           } catch (err) {
             res.statusCode = 500;
             res.setHeader("Content-Type", "application/json");
-            res.end(JSON.stringify({ ok: false, error: "Serverfehler im Dev-Middleware." }));
+            res.end(JSON.stringify({ ok: false, status: 500, error: "Serverfehler im Dev-Middleware." }));
           }
         });
       });

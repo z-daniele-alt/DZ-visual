@@ -29,7 +29,7 @@ export default async function handler(
   }
 
   const result = await sendContactEmail(payload);
-  res.statusCode = result.ok ? 200 : result.status;
+  res.statusCode = result.status;
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(result));
 }

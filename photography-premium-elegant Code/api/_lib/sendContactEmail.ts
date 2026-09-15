@@ -9,9 +9,13 @@ export type ContactPayload = {
   message: string;
 };
 
-export type SendResult =
-  | { ok: true; id?: string }
-  | { ok: false; status: number; error: string };
+export type SendResult = {
+  ok: boolean;
+  /** HTTP status the caller should respond with (always set, success or error). */
+  status: number;
+  id?: string;
+  error?: string;
+};
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -72,7 +76,7 @@ export async function sendContactEmail(payload: Partial<ContactPayload>): Promis
       return { ok: false, status: 502, error: result.error.message ?? 'Resend hat den Versand abgelehnt.' };
     }
 
-    return { ok: true, id: result.data?.id };
+    return { ok: true, status: 200, id: result.data?.id };
   } catch (err) {
     return { ok: false, status: 502, error: err instanceof Error ? err.message : 'Unbekannter Fehler beim Versand.' };
   }
